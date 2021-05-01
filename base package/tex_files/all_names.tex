@@ -1,0 +1,105 @@
+\documentclass{article}[letter, 12pt]
+\usepackage[a4paper, total={16.59cm, 22.94cm}]{geometry}
+\usepackage[spanish]{babel}
+\usepackage{inputenc}[utf8]
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=gray,
+    filecolor=blue,      
+    urlcolor=blue,
+}
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+\setlength{\parindent}{0pt}
+\renewcommand{\indent}{\hspace*{\tindent}}  
+\def\code#1{\texttt{#1}}
+\def\pseudocode#1{\texttt{\color{gray}\small#1}}
+
+\usepackage[default]{lato}
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{makecell}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhf{}
+
+\fancypagestyle{plain}{
+  \fancyhf{}  
+}
+\rhead{Documentación de R \textbf{\emph{\color{blue}{4.0.3}}}}
+\lhead{\code{all.names} \code{\{base\}} \pseudocode{extraer.nombres}}
+\rfoot{\thepage}
+
+\usepackage[titles]{tocloft}
+\setlength{\cftbeforesecskip}{-.2ex}
+\usepackage{lipsum}
+
+\makeatletter
+\renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
+\begin{flushleft}
+  \textbf{\@title}
+  \@author
+\end{flushleft}\egroup
+}
+\makeatother
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+{\color{gray}\normalfont\Large\bfseries}
+{\color{gray}\thesection}{1em}{}
+
+\begin{document}
+	\title{\Huge{Funciones para encontrar todos los \textit{nombres} de una \textit{expresión}}}
+	\maketitle
+	\section{\color{gray}Descripción}
+	\paragraph{}
+Las funciones \code{all.names()} y \code{all.vars()} devuelven un vector de caracteres que contiene todos los \href{run:/Vocabulary.pdf}{\textit{nombres}} que aparecen en una expresión o en una llamada.
+\tableofcontents{}
+\section{\color{gray}Forma de uso o sintaxis}
+\code{all.names(expr, functions = TRUE, max.names = -1L, unique = FALSE)}\\
+\code{all.vars(expr, functions = FALSE, max.names = -1L, unique = TRUE)}\\
+
+\section{\color{gray}Argumentos}
+
+\begin{tabular}{|p{1.75cm}|p{2.5cm}|p{10.75cm}}
+	\multicolumn{3}{p{14cm}}{Tabla 1. Argumentos de las funciones de extracción de nombres de los componentes de las sentencias de R} \\
+	\hline
+	\multicolumn{1}{p{1.75cm}}{Argumento} & \multicolumn{1}{p{2.5cm}}{\makecell[l]{Valor \\ esperado}} & \multicolumn{1}{p{10.75cm}}{Descripción} \\
+	\hline 
+	\multicolumn{1}{p{1.75cm}}{\pseudocode{expresión}} \\
+	\multicolumn{1}{p{1.75cm}}{\code{expr}} & \multicolumn{1}{p{2.5cm}}{Una sentencia.} & \multicolumn{1}{p{10.75cm}}{\href{run:/Vocabulary.pdf}{\textit{Expresión}} o \href{run:/Vocabulary.pdf}{\textit{llamada}} desde la cual se extraerán los nombres.} \\
+ 	\multicolumn{1}{p{1.75cm}}{\pseudocode{funciones}} \\
+	\multicolumn{1}{p{1.75cm}}{\code{functions}} & \multicolumn{1}{p{2.5cm}}{Un valor lógico.} & \multicolumn{1}{p{10.75cm}}{Valor lógico que indica si los nombres de la función deberán ser incluidos en el resultado.}\\ 
+	\multicolumn{1}{p{1.75cm}}{\pseudocode{máximo.de.nombres}} \\
+	\multicolumn{1}{p{1.75cm}}{\code{max.names}} & \multicolumn{1}{p{2.5cm}}{Un valor entero.} & \multicolumn{1}{p{10.75cm}}{El número de nombres máximo que serán devueltos. Un \code{-1} indicará que el único límite en el número de nombres devueltos será el de la extensión máxima de los vectores en R.}\\
+	\multicolumn{1}{p{1.75cm}}{\pseudocode{nombres.únicos}} \\
+	\multicolumn{1}{p{1.75cm}}{\code{unique}} & \multicolumn{1}{p{2.5cm}}{Un valor lógico.} & \multicolumn{1}{p{10.75cm}}{Valor lógico que indica si los nombres duplicados deberán ser removidos del valor.}\\ 
+ 	\hline 
+\end{tabular}
+
+\section{\color{gray}Detalles}
+\paragraph{}
+Las \href{run:/Vocabulary.pdf}{\textit{llamadas}}, \href{run:/Vocabulary.pdf}{\textit{expresiones}} y \href{run:/Vocabulary.pdf}{\textit{nombres}} son los tipos de objetos que constituyen las estructuras sintácticas básicas del lenguaje R; para más información, por favor consulte la página de ayuda de cada tipo, así como el tomo \href{run:/Vocabulary.pdf}{\textit{La definición del lenguaje R}} de la documentación.
+\paragraph{}
+Las funciones \code{all.names()} y \code{var.names()} son utilidades sintácticas que permiten descomponer e identificar las partes de un conjunto de sentencias válidas del lenguaje. La primera función identifica variables, funciones y operadores, la segunda solo identifica nombres de variables u objetos.
+\section{\color{gray}Valor devuelto}
+\paragraph{}
+La función \code{all.names()} devolverá un vector de caracteres con los nombres de las variables, funciones y operadores que encuentre en una sentencia sin evaluar de código de R.
+\paragraph{}
+La función \code{all.names()} devolverá un vector de caracteres con los nombres de las variables que encuentre en una sentencia sin evaluar de código de R.
+\section{\color{gray}También véase}
+\paragraph{}
+\href{run:/Vocabulary.pdf}{\code{substitute}}\code{()} para reemplazar símbolos por valores en una expresión.
+\section{\color{gray}Ejemplos}
+\code{all.names(expression(sin(x+y)))} \\
+\code{all.names(quote(sin(x+y)))  \# o una llamada} \\
+\code{all.vars(expression(sin(x+y)))} \\
+\par\noindent\rule{\textwidth}{0.4pt}
+\centerline{Paquete \{\code{base}\} versión \textbf{\emph{4.0.3}} Índice}
+\end{document}
