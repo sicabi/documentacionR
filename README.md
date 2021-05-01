@@ -1,5 +1,5 @@
 # Traducción de la documentación de R al español
-Traducción al español de los archivos de ayuda de la documentación de R, en formato .tex y .pdf
+Traducción al español de los archivos de ayuda de la documentación de R, en formato .tex, .odt y .pdf
 
 ¡Hola!
 
@@ -9,5 +9,5 @@ Es probable que realizar esto tome mucho tiempo, pero no tengo prisa. En el cami
 
 Si deseas colaborar, puedes hacer un pull/push request con un archivo de word que contenga la función o página de ayuda de R que tradujiste y yo después la pasaré a Latex para que quede publicada en PDF.
 
-
+*P.s. Los vínculos en los archivos de ayuda en pdf están marcados pero todavía están rotos, conforme se vayan poblando los directorios se irán habilitando.
 
