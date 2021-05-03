@@ -18,5 +18,10 @@ unlink(x = "base package/pdf_files/all_names.pdf")
   unlink(x = paste0(dir_tex, grep(pattern = ".*toc",
                                   x = dir("base package/tex_files/"), 
                                   value = TRUE)))
-
+  unlink(x = paste0(dir_tex, grep(pattern = ".*aux",
+                                  x = dir("base package/tex_files/"), 
+                                  value = TRUE)))
+  unlink(x = paste0(dir_tex, grep(pattern = ".*out",
+                                  x = dir("base package/tex_files/"), 
+                                  value = TRUE)))
 

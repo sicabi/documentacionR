@@ -13,9 +13,11 @@
 \newlength\tindent
 \setlength{\tindent}{\parindent}
 \setlength{\parindent}{0pt}
-\renewcommand{\indent}{\hspace*{\tindent}}  
+\renewcommand{\indent}{\hspace*{\tindent}}
+
 \def\code#1{\texttt{#1}}
 \def\pseudocode#1{\texttt{\color{gray}\small#1}}
+\def\codename#1{\texttt{\color{gray}\small#1}}
 
 \usepackage[default]{lato}
 \usepackage[T1]{fontenc}
@@ -54,21 +56,26 @@
 {\color{gray}\normalfont\Large}
 {\color{gray}\thesection}{1em}{}
 
+\titleformat{\subsection}
+{\color{gray}\normalfont}
+{\color{gray}\thesubsection}{1em}{}
+
+
 \begin{document}
 	\title{\Huge{Funciones para encontrar todos los \textit{nombres} de una \textit{expresión}}}
 	\maketitle
 	\section{\color{gray}Descripción}
 	\paragraph{}
-Las funciones \code{all.names()} y \code{all.vars()} devuelven un vector de caracteres que contiene todos los \href{run:/Vocabulary.pdf}{\textit{nombres}} que aparecen en una \href{run:/Vocabulary.pdf}{\textit{expresión}} o en una \href{run:/Vocabulary.pdf}{\textit{llamada}} de R.
+Las funciones \code{all.names()} y \code{all.vars()} devuelven un vector de caracteres que contiene todos los \href{run:/Vocabulary.pdf}{\textit{nombres}} que aparecen en una \href{run:/Vocabulary.pdf}{\textit{expresión}} o en una \href{run:/Vocabulary.pdf}{\textit{llamada}} de \codename{R}.
 \tableofcontents{}
 \section{\color{gray}Forma de uso o sintaxis}
-\code{all.names(expr, functions = TRUE, max.names = -1L, unique = FALSE)}\\
-\code{all.vars(expr, functions = FALSE, max.names = -1L, unique = TRUE)}\\
+\indent\code{all.names(expr, functions = TRUE, max.names = -1L, unique = FALSE)}\\
+\indent\code{all.vars(expr, functions = FALSE, max.names = -1L, unique = TRUE)}\\
 
 \section{\color{gray}Argumentos}
 
 \begin{tabular}{|p{1.75cm}|p{2.5cm}|p{10.75cm}}
-	\multicolumn{3}{p{14cm}}{Tabla 1. Argumentos de las funciones de extracción de nombres de los componentes de las sentencias de R} \\
+	\multicolumn{3}{p{14cm}}{Tabla 1. Argumentos de las funciones de extracción de nombres de los componentes de las sentencias de \codename{R}} \\
 	\hline
 	\multicolumn{1}{p{1.75cm}}{Argumento} & \multicolumn{1}{p{2.5cm}}{\makecell[l]{Valor \\ esperado}} & \multicolumn{1}{p{10.75cm}}{Descripción} \\
 	\hline 
@@ -77,20 +84,20 @@ Las funciones \code{all.names()} y \code{all.vars()} devuelven un vector de cara
  	\multicolumn{1}{p{1.75cm}}{\pseudocode{funciones}} \\
 	\multicolumn{1}{p{1.75cm}}{\code{functions}} & \multicolumn{1}{p{2.5cm}}{Un valor lógico.} & \multicolumn{1}{p{10.75cm}}{Valor lógico que indica si los nombres de la función deberán ser incluidos en el resultado.}\\ 
 	\multicolumn{1}{p{1.75cm}}{\pseudocode{máximo.de.nombres}} \\
-	\multicolumn{1}{p{1.75cm}}{\code{max.names}} & \multicolumn{1}{p{2.5cm}}{Un valor entero.} & \multicolumn{1}{p{10.75cm}}{El número máximo de nombres que será devuelto. Un \code{-1} indicará que el único límite en el número de nombres devueltos será el de la extensión máxima de los vectores en R.}\\
+	\multicolumn{1}{p{1.75cm}}{\code{max.names}} & \multicolumn{1}{p{2.5cm}}{Un valor entero.} & \multicolumn{1}{p{10.75cm}}{El número máximo de nombres que serán devueltos. Un valor de \code{-1} indicará que el único límite en el número de nombres devueltos será el de la extensión máxima de los vectores en R.}\\
 	\multicolumn{1}{p{1.75cm}}{\pseudocode{nombres.únicos}} \\
-	\multicolumn{1}{p{1.75cm}}{\code{unique}} & \multicolumn{1}{p{2.5cm}}{Un valor lógico.} & \multicolumn{1}{p{10.75cm}}{Valor lógico que indica si los nombres duplicados deberán ser removidos del valor.}\\ 
+	\multicolumn{1}{p{1.75cm}}{\code{unique}} & \multicolumn{1}{p{2.5cm}}{Un valor lógico.} & \multicolumn{1}{p{10.75cm}}{Valor lógico que indica si los nombres duplicados deberán ser removidos del resultado.}\\ 
  	\hline 
 \end{tabular}
 
 \section{\color{gray}Detalles}
 \paragraph{}
-Las \href{run:/Vocabulary.pdf}{\textit{llamadas}}, \href{run:/Vocabulary.pdf}{\textit{expresiones}} y \href{run:/Vocabulary.pdf}{\textit{nombres}} son los tipos de objetos que constituyen las estructuras sintácticas básicas del lenguaje R; para más información, por favor consulte la página de ayuda de cada tipo, así como el tomo \href{run:/Vocabulary.pdf}{\textit{La definición del lenguaje R}} de la documentación.
+Las \href{run:/Vocabulary.pdf}{\textit{llamadas}}, las \href{run:/Vocabulary.pdf}{\textit{expresiones}} y los \href{run:/Vocabulary.pdf}{\textit{nombres}} son los tipos de objetos que constituyen las estructuras sintácticas básicas del lenguaje en \codename{R}; para más información, por favor consulte la página de ayuda sobre cada tipo de objeto, así como el tomo sobre \href{run:/Vocabulary.pdf}{\textit{la definición del lenguaje R}} de los manuales de la documentación.\par
 \paragraph{}
-Las funciones \code{all.names()} y \code{var.names()} son herramientas que permiten descomponer la sintaxis de un conjunto de sentencias válidas, aunque todavía no evaluadas, del lenguaje. La primera función identifica variables, funciones y operadores, la segunda solo identifica nombres de variables u objetos.
+Las funciones \code{all.names()} y \code{var.names()} son herramientas que permiten descomponer la sintaxis de un conjunto de sentencias válidas, aunque todavía no evaluadas, del lenguaje. La primera función identificará variables, funciones y operadores, mientras que la segunda solo identificará nombres de variables u objetos.
 \section{\color{gray}Valor devuelto}
 \paragraph{}
-La función \code{all.names()} devolverá un vector de caracteres con los nombres de las variables, funciones y operadores que encuentre en una sentencia \href{run:/Vocabulary.pdf}{no evaluada} de código de R.
+La función \code{all.names()} devolverá un vector de caracteres con los nombres de las variables, funciones y operadores que encuentre en una sentencia \href{run:/Vocabulary.pdf}{no evaluada} de código de \codename{R}.
 \paragraph{}
 La función \code{all.names()} devolverá un vector de caracteres con los nombres de las variables que encuentre en una sentencia \href{run:/Vocabulary.pdf}{no evaluada} de código de R.
 \section{\color{gray}Referencias}
@@ -100,9 +107,21 @@ R Core Team. \href{https://cran.r-project.org/doc/manuals/R-lang.html}{\textit{R
 \paragraph{}
 \href{run:/Vocabulary.pdf}{\code{substitute}}\code{()} para reemplazar símbolos por valores en una expresión.
 \section{\color{gray}Ejemplos}
-\code{all.names(expression(sin(x+y)))} \\
-\code{all.names(quote(sin(x+y)))  \# o una llamada} \\
-\code{all.vars(expression(sin(x+y)))} \\
+\indent\code{all.names(expression(sin(x+y)))} \\
+\indent\code{all.names(quote(sin(x+y)))  \# o una llamada} \\
+\indent\code{all.vars(expression(sin(x+y)))} \\
+\section{\color{gray}Código fuente}
+\subsection{\color{gray} \code{all.names()}}
+\indent\code{\color{red}{function}(expr, functions = \color{blue}{TRUE}, max.names = \color{blue}{-1L}, unique = \color{blue}{FALSE})} \\
+\indent\indent\code{.Internal(all.names(expr, functions, max.names, unique))}\\
+\subsection{\color{gray} \code{all.vars()}}
+\indent\code{function(expr, functions = FALSE, max.names = -1L, unique = TRUE)} \\
+\indent\indent\code{.Internal(all.names(expr, functions, max.names, unique))}\\
+
+\section{\color{gray}Sobre la traducción}
+\paragraph{}
+La traducción al español de esta página de ayuda fue actualizada el 03 de mayo de 2021 y está basada en la documentación original de \codename{R} en inglés para la versión 4.0.3. La revisión técnica de esta página de ayuda todavía no ha sido realizada. Si deseas participar realizando la revisión técnica por favor dirígete a la página del proyecto en: \href{https://github.com/sicabi/documentacionR}{https://github.com/sicabi/documentacionR}.
+\\
 \par\noindent\rule{\textwidth}{0.4pt}
-\centerline{Paquete \{\code{base}\} versión \textbf{\emph{4.0.3}} Índice}
+\centerline{Paquete \{\code{base}\} versión \textbf{\emph{4.0.3}} \href{run:/Vocabulary.pdf}{Índice}}
 \end{document}
