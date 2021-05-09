@@ -4,15 +4,15 @@ move_after_compose <- function(from, to) {
   file.rename(from = from,  to = to)
 }
 delete_aux_files <- function(dir = character()) {
-  unlink(x = paste0(dir, grep(pattern = ".*tex",
+  unlink(x = paste0(dir, grep(pattern = ".*\\.tex",
                                   x = dir(dir), 
                                   value = TRUE, invert = TRUE)))
 }
 
 
 file.name <- "raw.pdf"
-tex.dir <- "base package/tex_files/"
-pdf.dir <- "base package/pdf_files/"
+tex.dir <- "R 4.0.3/base package/tex_files/"
+pdf.dir <- "R 4.0.3/base package/pdf_files/"
 from.path <- paste0(tex.dir, file.name)
 to.path <- paste0(pdf.dir, file.name)
 
