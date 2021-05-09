@@ -1,0 +1,160 @@
+\documentclass{article}[letter, 12pt]
+\usepackage[a4paper, total={16.59cm, 22.94cm}]{geometry}
+\usepackage[spanish]{babel}
+\usepackage{inputenc}[utf8]
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=gray,
+    filecolor=blue,      
+    urlcolor=blue,
+}
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+\setlength{\parindent}{0pt}
+\renewcommand{\indent}{\hspace*{\tindent}}
+
+\def\code#1{\texttt{#1}}
+\def\pseudocode#1{\texttt{\color{gray}\small#1}}
+\def\codename#1{\textbf{\texttt{\color{gray}#1}}}
+
+\usepackage[default]{lato}
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{makecell}
+
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhf{}
+
+\fancypagestyle{plain}{
+  \fancyhf{}  
+}
+\rhead{Documentación de R \textbf{\emph{\color{blue}{4.0.3}}}}
+\lhead{\code{raw} \code{\{base\}} \pseudocode{crudo}}
+\rfoot{\thepage}
+
+\usepackage[titles]{tocloft}
+\setlength{\cftbeforesecskip}{-.2ex}
+
+\makeatletter
+\renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
+\begin{flushleft}
+  \textbf{\@title}
+  \@author
+\end{flushleft}\egroup
+}
+\makeatother
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+{\color{gray}\normalfont\Large}
+{\color{gray}\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\color{gray}\normalfont}
+{\color{gray}\thesubsection}{1em}{}
+
+
+\begin{document}
+	\title{\Huge{Funciones para crear vectores de tipo \textit{crudo} o para verificar si un vector es de tipo \textit{crudo}}}
+	\maketitle
+	\section{\color{gray}Descripción}
+\paragraph{}La función \code{raw()} crea un vector de tipo \textquotedbl\code{raw}\textquotedbl\ o crudo, que almacena \textit{bytes} sin codificar representados por valores hexadecimales. Para más información sobre el almacenamiento de datos crudos véase la sección \textit{Detalles}, y para una introducción al formato hexadecimal véase la sección \textit{Formato binario y hexadecimal}, ambas en esta página de ayuda.\par
+\paragraph{}La función \code{as.raw()} constriñe hacia el tipo crudo cualquier vector. Por su parte, la función \code{is.raw()} verifica si un objeto es de tipo crudo.\par
+\tableofcontents{}
+\section{\color{gray}Forma de uso o sintaxis}
+\indent\code{raw(length = 0)}\\
+\indent\code{as.raw(x)}\\
+\indent\code{is.raw(x)}\\
+
+\section{\color{gray}Argumentos}
+
+\begin{tabular}{|p{1.75cm}|p{2.5cm}|p{10.75cm}}
+	\multicolumn{3}{p{14cm}}{Tabla 1. Argumentos de las funciones de creación de vectores crudos} \\
+	\hline
+	\multicolumn{1}{p{1.75cm}}{Argumento} & \multicolumn{1}{p{2.5cm}}{\makecell[l]{Valor \\ esperado}} & \multicolumn{1}{p{10.75cm}}{Descripción} \\
+	\hline 
+	\multicolumn{1}{p{1.75cm}}{\pseudocode{extensión}} \\
+	\multicolumn{1}{p{1.75cm}}{\code{length}} & \multicolumn{1}{p{2.5cm}}{Un valor entero.} & \multicolumn{1}{p{10.75cm}}{Extensión deseada del vector, es decir, el número de elementos que almacenará. Cada elemento representará a un \textit{byte.}} \\
+ 	\multicolumn{1}{p{1.75cm}}{\pseudocode{objeto}} \\
+	\multicolumn{1}{p{1.75cm}}{\code{x}} & \multicolumn{1}{p{2.5cm}}{Un objeto.} & \multicolumn{1}{p{10.75cm}}{Un objeto para ser constreñido como vector de tipo crudo.}\\ 
+ 	\hline 
+\end{tabular}
+
+\section{\color{gray}Detalles}
+\paragraph{}El tipo de almacenamiento \textquotedbl\code{raw}\textquotedbl\ consiste en un formato específico de \codename{R} para contener \textit{bytes} binarios, es decir, \textit{bytes} crudos o sin codificar, dentro de vectores del mismo tipo. En este formato, cada \textit{byte} almacenado es representado como un par de números en notación hexadecimal. Los elementos de un vector crudo consistirán, entonces, en pares de dígitos hexadecimales. De esta manera, un dígito individual representará medio octeto, y cada par de dígitos representará un octeto completo. Para una breve explicación sobre la relación entre datos crudos y hexadecimales véase primero la sección \textit{Formato binario y hexadecimal} en esta página de ayuda. Los vectores crudos son un tipo de vector atómico o elemental de \codename{R} y, también, son un tipo de objeto básico del lenguaje.\par
+
+\paragraph{}La extracción o reemplazo de elementos individuales de un vector crudo será posible mediante indización simple. Sin embargo, la operación de remplazo o asignación de valores solo podrá realizarse con valores de entrada que sean de tipo crudo o que hayan sido constreñidos a este tipo. Por ejemplo, con elementos que provengan de otros vectores de tipo crudo. Para los vectores crudos, los operadores relacionales funcionarán con el mismo método que los operadores lógicos, que consiste en interpretar la operación \textit{bit} a \textit{bit}. Para mayor información, véase la página de ayuda del tema \textit{Comparaciones}, que detalla cómo los operadores relacionales interpretarán el orden numérico de la representación de \textit{bytes}.\par
+
+\paragraph{}Los elementos de un vector crudo serán, entonces, pares de dígitos hexadecimales que representan, a su vez, \textit{bytes} individuales. El despliegue en pantalla de los vectores crudos mostrará a cada \textit{byte} separado uno del otro, en caso de que el vector contenga más de un elemento. Utilice la función \code{rawToChar()} si desea ver la representación de caracteres de cada \textit{byte}. En caso de que los códigos hexadecimales correspondan a caracteres no imprimibles se desplegarán también las secuencias de escape.\par
+
+\paragraph{}La coerción al tipo crudo tratará a los valores de entrada como si representaran números naturales (en notación decimal) menores a 256, por lo que el valor de entrada se convertirá primero en un número entero. Si los valores de entrada están fuera del rango inclusivo entre 0 y 255, o son valores no disponibles (\code{NA}), su valor se establecerá con el valor cero (\code{00}), conocido como el \textit{byte} nulo.\par
+
+\paragraph{}Las funciones \code{as.raw()} e \code{is.raw()} son funciones primitivas, por lo que su código fuente y especificación formal es ligeramente diferente al resto de funciones de \codename{R}.\par
+
+\section{\color{gray}Valor devuelto}
+
+\paragraph{}La función \code{raw()} devolverá un vector crudo con el número de elementos especificado en el argumento de extensión \code{length}. Al momento de su creación, cada elemento del vector será igual a cero (\code{00}). Luego, los vectores crudos podrán ser usados para almacenar secuencias de \textit{bytes} con un número de dígitos fijo. Esto es, \textit{bytes} cuyo número de dígitos tendrá siempre dos valores hexadecimales. Para más información, véase la sección \textit{Formato binario y hexadecimal}.\par
+
+\paragraph{}La función \code{as.raw()} intentará constreñir al objeto del argumento \code{x} para convertirlo al tipo crudo y devolverlo como un vector de este tipo. Los valores originales que estén fuera del rango válido de conversión (de 0 a 255, véase la sección \textit{Detalles}) serán transformados a cero (\code{00}) en el orden de los elementos. En cualquier otro caso se considerará que el constreñimiento fue exitoso.\par
+
+\paragraph{}La función \code{is.raw()} devolverá el valor lógico verdadero (\code{TRUE}) si y solo si la prueba lógica \code{typeof(x) ==} \textquotedbl\code{raw}\textquotedbl\  es cierta, lo que significa que este es uno de los tipos de almacenamiento básico en \codename{R} y que no habrá otras clases de objetos definidas como tipo crudo diferente a los vectores de tipo crudo.\par
+
+
+
+\section{\color{gray}Formato binario y hexadecimal}
+\paragraph{}En computación, los valores crudos se refieren a datos almacenados en formato binario, es decir, sin codificar o, figurativamente, “sin formato”. El formato binario es el estado de almacenamiento fundamental de la información digital y está basado en la notación del sistema de numeración binario. Un número binario está compuesto por dígitos que sólo pueden adoptar dos valores alternativos: el cero (0) o el uno (1). Aunque un número en notación binaria puede tener un número indefinido de dígitos, en el formato de almacenamiento de datos binario el número máximo de dígitos para cada número suele fijarse en ocho. A este rango de valores de ocho dígitos binarios se le denomina, por convención, \textit{byte} u octeto.\par
+
+\paragraph{}Por consiguiente, un byte de ocho dígitos podrá adoptar solamente 256 valores diferentes, resultado del número de combinaciones únicas de ceros y unos que hay en ocho posiciones ($2^8$ = 256). Leído en notación decimal, el rango de valores de un byte va de 0 a 255. Debido a que la representación en notación binaria de los bytes es algo difícil de interpretar para cualquier persona, los datos crudos suelen desplegarse en pantalla con la notación hexadecimal, la cual requiere de sólo dos dígitos para representar el valor de un byte completo.\par
+
+\paragraph{}Un número hexadecimal está compuesto por dígitos que pueden adoptar dieciséis valores diferentes: los dígitos de cero (0) a nueve (9) seguidos de las letras del alfabeto latino de la letra a (a = 10) a la letra efe (f = 15). Dado que cada dígito hexadecimal puede adoptar dieciséis valores diferentes, bastarán dos dígitos hexadecimales para representar todas las combinaciones de valores posibles ($16^2$ = 256) de un byte de ocho dígitos. Por ello, gracias a que permite representar código binario en forma —ligeramente— más legible para las personas, la notación hexadecimal es utilizada ampliamente en programación para representar datos binarios o crudos.\par
+
+\paragraph{}Para realizar la conversión del valor de un byte en notación hexadecimal a su valor en notación decimal basta con multiplicar el valor en decimal del primer dígito hexadecimal (de izquierda a derecha) por dieciséis, y luego sumar al resultado el valor en decimal del segundo dígito hexadecimal. Por ejemplo, el valor del \textit{byte} hexadecimal \code{ef} es equivalente al resultado de (14 x 16) + 15 = 239. De esta manera, un byte binario de extensión fijada en ocho dígitos, tendrá un valor equivalente de tres dígitos en notación decimal y dos dígitos en notación hexadecimal.\par
+
+\paragraph{}Cabe mencionar que las letras de los dígitos hexadecimales pueden denotarse en mayúsculas o minúsculas indistintamente. No obstante, el tipo crudo de \codename{R} utilizará solo las minúsculas para representar a los dígitos hexadecimales en pantalla.\par
+
+\section{\color{gray}También véase}
+\paragraph{}Las funciones \code{charToRaw()}, \code{rawShift()} y las otras funciones de conversión entre tipos de almacenamiento y el tipo crudo.\par
+\paragraph{}El operador lógico \code{\&} para operaciones \textit{bit} a \textit{bit} sobre vectores crudos.\par
+\paragraph{}\code{writeBin()} y \code{readBin()} para escribir y leer vectores crudos como conexiones.\par
+
+\section{\color{gray}Ejemplos}
+\indent\code{xx <- raw(2)} \\
+\indent\code{xx[1] <- as.raw(40)     \# Adviértase, no simplemente 40.} \\
+\indent\code{xx[2] <- charToRaw(}\textquotedbl\code{A}\textquotedbl\code{)} \\
+\indent\code{xx       \#\# 28 41   -- un vector crudo imprime valores hexadecimales} \\
+\indent\code{dput(xx) \#\# igual que as.raw(c(0x28, 0x41))} \\
+\indent\code{as.integer(xx) \#\# 40 65} \\
+\indent\code{x <-} \textquotedbl\code{Una cadena de prueba}\textquotedbl\ \\
+\indent\code{(y <- charToRaw(x))} \\
+\indent\code{is.vector(y) \# TRUE} \\
+\indent\code{rawToChar(y)} \\
+\indent\code{is.raw(x)} \\
+\indent\code{is.raw(y)} \\
+\indent\code{stopifnot( charToRaw(} \textquotedbl\code{\textbackslash xa3}\textquotedbl\code{) == as.raw(0xa3) )} \\\\
+\indent\code{esASCII <-  function(txt) all(charToRaw(txt) <= as.raw(127))} \\
+\indent\code{esASCII(x)  \# verdadero} \\
+\indent\code{esASCII(}\textquotedbl\code{\textbackslash xa325.63}\textquotedbl\code{) \# falso (en el estándar Latin-1, ésta es una cantidad en libras esterlinas)} \\
+
+\section{\color{gray}Código fuente}
+\subsection{\color{gray} \code{raw()}}
+\indent\code{function (length = 0L) } \\
+\indent\indent\code{.Internal(vector(\textquotedbl\code{raw}\textquotedbl, length))}\\
+\subsection{\color{gray}\code{as.raw()}}
+\indent\code{function (x) .Primitive(\textquotedbl\code{as.raw}\textquotedbl)} \\
+\subsection{\color{gray}\code{is.raw()}}
+\indent\code{function (x) .Primitive(\textquotedbl\code{is.raw}\textquotedbl)} \\
+
+\section{\color{gray}Sobre la traducción}
+\paragraph{}
+La traducción al español de esta página de ayuda fue actualizada el 09 de mayo de 2021 y está basada en la documentación original de \codename{R} en inglés para la versión 4.0.3. La revisión técnica de esta página de ayuda todavía no ha sido realizada. Si deseas participar realizando la revisión técnica o sugiriendo mejoras gramaticales/ortográficas/estilísticas al texto, por favor dirígete a la página del proyecto en: \\\href{https://github.com/sicabi/documentacionR}{https://github.com/sicabi/documentacionR}, para saber un poco más sobre cómo contribuir. Toda contribución será atribuida a la persona que la realice.
+\\
+\par\noindent\rule{\textwidth}{0.4pt}
+\centerline{Paquete \{\code{base}\} versión \textbf{\emph{4.0.3}} \href{run:/Vocabulary.pdf}{Índice}}
+\end{document}

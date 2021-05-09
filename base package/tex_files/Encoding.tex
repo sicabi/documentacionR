@@ -26,18 +26,6 @@
 \usepackage{fancyhdr}
 \usepackage{makecell}
 
-
-\pagestyle{fancy}
-\renewcommand{\headrulewidth}{0pt}
-\fancyhf{}
-
-\fancypagestyle{plain}{
-  \fancyhf{}  
-}
-\rhead{Documentación de R \textbf{\emph{\color{blue}{4.0.3}}}}
-\lhead{\code{all.names} \code{\{base\}} \pseudocode{extraer.nombres}}
-\rfoot{\thepage}
-
 \usepackage[titles]{tocloft}
 \setlength{\cftbeforesecskip}{-.2ex}
 
@@ -60,17 +48,33 @@
 {\color{gray}\normalfont}
 {\color{gray}\thesubsection}{1em}{}
 
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhf{}
+
+\fancypagestyle{plain}{
+  \fancyhf{}  
+}
+\rhead{Documentación de R \textbf{\emph{\color{blue}{4.0.3}}}}
+\lhead{\code{Encoding} \code{\{base\}} \pseudocode{Codificación}}
+\rfoot{\thepage}
+
 
 \begin{document}
-	\title{\Huge{Funciones para encontrar todos los \textit{nombres} de una \textit{expresión}}}
+	\title{\Huge{Funciones para leer o declarar la codificación de un vector de caracteres}}
 	\maketitle
-	\section{\color{gray}Descripción}
-	\paragraph{}
-Las funciones \code{all.names()} y \code{all.vars()} son herramientas de análisis sintáctico que devuelven un vector de caracteres que contiene todos los \href{run:/Vocabulary.pdf}{\textit{nombres}} que aparecen en una \href{run:/Vocabulary.pdf}{\textit{expresión}} o en una \href{run:/Vocabulary.pdf}{\textit{llamada}} de \codename{R}.\par
+\section{\color{gray}Descripción}
+\paragraph{}\code{Encode()} es la función principal para leer, así como para declarar, la codificación de un vector de texto. En la forma \code{Encode(x)}, permite leer la codificación de caracteres de un vector de texto \textit{\code{x}} en caso de ésta haya sido previamente declarada. Alternativamente, en la forma \code{Encode(x) <- etiqueta}, permite declarar a una etiqueta reconocida por \codename{R} como la codificación del vector \code{x}. Véase más adelante la sección \textit{Detalles} para saber cuáles son las etiquetas aceptadas. Si desea conocer más sobre la definición general del concepto en computación de \textit{codificación de caracteres} véase la sección \textit{Historia y definición de la codificación de caracteres} en esta página de ayuda.\par
+\paragraph{}Otras funciones, como \code{enc2native()}, declaran que la codificación de un vector de texto será la codificación predeterminada para la sesión actual de \codename{R}. La función \code{enc2utf8()} codifica a un vector de texto en el estándar UTF-8. Aunque son conceptos similares, es importante distinguir entre la codificación de los vectores de texto o tipo carácter, y la codificación de los archivos. Para conocer más sobre sus definiciones y sus diferencias véase la sección \textit{Codificación de archivos y codificación de vectores tipo caracter} en esta página de ayuda, así como la sección \textit{Codificación de conexión} en la página de ayuda referente a las conexiones en \codename{R}.\par
 \tableofcontents{}
 \section{\color{gray}Forma de uso o sintaxis}
-\indent\code{all.names(expr, functions = TRUE, max.names = -1L, unique = FALSE)}\\
-\indent\code{all.vars(expr, functions = FALSE, max.names = -1L, unique = TRUE)}\\
+
+\indent\code{Encoding(x)}\\
+
+\indent\code{Encoding(x) <- etiqueta}\\
+
+\indent\code{enc2native(x)}\\
+\indent\code{enc2utf8(x)}\\
 
 \section{\color{gray}Argumentos}
 
@@ -91,32 +95,19 @@ Las funciones \code{all.names()} y \code{all.vars()} son herramientas de anális
 \end{tabular}
 
 \section{\color{gray}Detalles}
-\paragraph{}
-Las \href{run:/Vocabulary.pdf}{\textit{llamadas}}, las \href{run:/Vocabulary.pdf}{\textit{expresiones}} y los \href{run:/Vocabulary.pdf}{\textit{nombres}} son los tipos de objetos que constituyen las estructuras sintácticas básicas del lenguaje en \codename{R}; para más información, por favor consulte la página de ayuda sobre cada tipo de objeto, así como el tomo sobre \href{run:/Vocabulary.pdf}{\textit{la definición del lenguaje R}} de los manuales de la documentación.\par
-\paragraph{}
-Las funciones \code{all.names()} y \code{var.names()} son herramientas que permiten descomponer la sintaxis de un conjunto de sentencias válidas, aunque todavía no evaluadas, del lenguaje. La primera función identificará variables, funciones y operadores, mientras que la segunda solo identificará nombres de variables u objetos.\par
+
+\paragraph{}Los vectores de tipo cadena de carácter (es decir, de texto) pueden codificarse con las etiquetas \textquotedbl\code{UTF-8}\textquotedbl, \textquotedbl\code{latin1}\textquotedbl, \textquotedbl\code{unknown}\textquotedbl\ o \textquotedbl\code{bytes}\textquotedbl, que corresponden, a su vez, a los estándares de codificación de texto UTF-8, Latin-1, ASCII y binaria (es decir, sin codificar). En términos generales, las codificaciones UTF-8 y Latin-1 son los dos estándares básicos admitidos para vectores de tipo carácter dentro de \codename{R} y corresponden a los utilizados en plataformas similares a Unix y a Windows, respectivamente. Además de las codificaciones básicas, \codename{R} utiliza la etiqueta \textquotedbl\code{unknown}\textquotedbl\ (\color{gray}{\textquotedbl\pseudocode{desconocida}\textquotedbl}\color{black}{) para identificar cadenas de texto compuestas solamente por caracteres ASCII.}\par
+
+\paragraph{}Debido a que los códigos de caracteres ASCII son los mismos para UTF-8 y Latin-1, se asume que un vector con estos caracteres podría pertenecer originalmente a cualquiera de ellas y por ello se le asigna la etiqueta correspondiente al caso de codificación desconocida. La etiqueta \textquotedbl\code{bytes}\textquotedbl\ (recomendada sólo para uso experto) se refiere a cadenas de texto que representan datos sin codificar o binarios. Si desea consultar la codificación bajo la cual está configurada su sesión de \codename{R} use la función sobre la información de localización: \code{l10n\_info()}, que devuelve una lista con valores lógicos etiquetados con la codificación de caracteres vigente para su sesión.\par 
+
 \section{\color{gray}Valor devuelto}
-\paragraph{}
-La función \code{all.names()} devolverá un vector de caracteres con los nombres de las variables, funciones y operadores que encuentre en una sentencia \href{run:/Vocabulary.pdf}{no evaluada} de código de \codename{R}.\par
-\paragraph{}
-La función \code{all.names()} devolverá un vector de caracteres con los nombres de las variables que encuentre en una sentencia \href{run:/Vocabulary.pdf}{no evaluada} de código de \codename{R}.\par
+
 \section{\color{gray}Referencias}
-\paragraph{}
-R Core Team. \href{https://cran.r-project.org/doc/manuals/R-lang.html}{\textit{R Language Definition}}. The R Manuals. Viena: The R Foundation, 2021.
+
 \section{\color{gray}También véase}
-\paragraph{}
-\href{run:/Vocabulary.pdf}{\code{substitute}}\code{()} para reemplazar símbolos por valores en una expresión.
+
 \section{\color{gray}Ejemplos}
-\indent\code{all.names(expression(sin(x+y)))} \\
-\indent\code{all.names(quote(sin(x+y)))  \# o una llamada} \\
-\indent\code{all.vars(expression(sin(x+y)))} \\
-\section{\color{gray}Código fuente}
-\subsection{\color{gray} \code{all.names()}}
-\indent\code{function(expr, functions = TRUE, max.names = -1L, unique =FALSE)} \\
-\indent\indent\code{.Internal(all.names(expr, functions, max.names, unique))}\\
-\subsection{\color{gray}\code{all.vars()}}
-\indent\code{function(expr, functions = FALSE, max.names = -1L, unique = TRUE)} \\
-\indent\indent\code{.Internal(all.names(expr, functions, max.names, unique))}\\
+
 
 \section{\color{gray}Sobre la traducción}
 \paragraph{}
